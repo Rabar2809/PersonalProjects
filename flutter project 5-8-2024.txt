@@ -1,0 +1,531 @@
+import 'package:contactus/contactus.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Forward Fitness Club',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = [         // made an array for calling each class 'page' by the number of index
+    HomeScreen(),
+    ProfileScreen(),
+    Classes(),
+    Nutrition(),
+    contactUs(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Made with Flutter', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900),),
+        backgroundColor: Colors.cyan,
+        centerTitle: true,
+      ),
+      body: _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+
+        
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const  [
+          BottomNavigationBarItem(
+            backgroundColor: Colors.cyan,
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+
+          BottomNavigationBarItem(
+            backgroundColor: Colors.cyan,
+            icon: Icon(Icons.person_3),
+            label: 'About Us',
+          ),
+
+          BottomNavigationBarItem(
+            backgroundColor: Colors.cyan,
+            icon: Icon(Icons.schedule),
+            label: 'Classes',
+          ),
+
+          BottomNavigationBarItem(
+            backgroundColor: Colors.cyan,
+            icon: Icon(Icons.health_and_safety),
+            label: 'Nutrition',
+          ),
+
+          BottomNavigationBarItem(
+            backgroundColor: Colors.cyan,
+            icon: Icon(Icons.call),
+            label: 'Contact Us',
+            
+          ),
+
+        ],
+        selectedIconTheme: const IconThemeData(color: Colors.black),
+        unselectedIconTheme: const IconThemeData(color: Colors.black),
+        
+
+      ),
+    );
+  }
+}
+
+
+class HomeScreen extends StatelessWidget {          // First Page when the index is equal to 0, set by default
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: ListView(
+        children: <Widget>[
+          HomePageContent(
+            txt: 'Welcome to Forward Fitness Club',
+          ),
+
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: SizedBox(child: 
+            Text('Our mission is to help our clients meet their fitness and nutrition goals.'),),
+          ),
+
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: SizedBox( child: 
+            Text('We provide a FREE one-week membership so you can experience the benefits of our equipment and facility. This one-week trial gives you complete access to our equipment, training classes, and nutrition planning. Contact us today to start your free trial!')),
+          ),
+
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: SizedBox( child: 
+            Text('If you have struggled with getting healthy and need the motivation and resources to make a healthy lifestyle change, contact us today. Our facility includes state- of-the-art equipment, convenient group training classes, and nutrition tips and information to keep you healthy.'),),
+          )
+
+        ],
+        
+      )
+      
+
+    );
+      
+  }
+
+}
+
+
+class HomePageContent extends StatelessWidget{          // a class made for the first page 
+
+  HomePageContent({Key? key, this.txt="", this.image=""}) : super(key: key);
+
+  final String txt;
+  final String image;
+
+  @override
+  Widget build(BuildContext context){
+
+    return Container(
+      margin: const EdgeInsets.only(left: 5, right: 5, top: 3),
+      child: Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    elevation: 5,
+    child: Container(
+      height: 300,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: const AssetImage('homeBanner.jpg'),
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.1), BlendMode.softLight),
+                ),
+        ),
+        child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(15.0),
+              bottomRight: Radius.circular(15.0)),
+            color: Colors.black.withOpacity(0.6),
+          ),
+          width: double.infinity,
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            txt,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+
+    )
+          )
+    ),
+        ),
+    )
+    ),
+    );
+    
+  }
+
+}
+
+
+class ProfileScreen extends StatelessWidget {       // Our Second Page 'Equipment' page
+  const ProfileScreen({super.key});
+       
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      appBar: AppBar(
+        title: const Text('Equipments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20) ,),
+        centerTitle: true,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(3, 12, 3, 12),
+        children: <Widget>[
+          ListOfExercises(
+            name: 'Weights',
+            description: 'Our facility includes a weight training area with several weight options. Build lean muscle with weights and improve your core with weight training.',
+            image: "equipment1.jpg",
+          ),
+
+          ListOfExercises(
+            name: 'Cardio',
+            description: 'Burn fat through cardio workouts. If you need to lose 20 lbs or more, include at least 30 minutes of cardio each day. We have several equipment choices for your workout.',
+            image: "equipment2.jpg",
+          ),
+
+          ListOfExercises(
+            name: 'Personal Training',
+            description: 'Our certified personal trainers work with you one on one to help you obtain your fitness goals. Our personal trainers keep pushing you farther than you would push yourself.',
+            image: "equipment3.jpg",
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+class ListOfExercises extends StatelessWidget{        // a class that is created for our second page content
+
+  ListOfExercises({Key? key, this.name="", this.description="", this.image=""}) : super(key: key);
+
+  final String name;
+  final String description;
+  final String image;
+
+  @override
+  Widget build(BuildContext context){
+    return Container(
+      padding: const EdgeInsets.all(2),
+      height: 110,
+      child: Card(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+
+            Image.asset(image),
+
+            Expanded(child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>
+
+                [
+              
+                  Text(this.name, style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(this.description, style: const TextStyle(fontSize: 13),)
+
+                ],
+              ),
+            ))
+
+          ],
+        ),
+      ),
+    );
+  }
+
+}
+
+
+class Classes extends StatelessWidget{        // Third 'Classes' Page 
+
+  @override
+  Widget build(BuildContext context){
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.grey,
+        
+        body: ListView(
+          children: <Widget>[
+            const Center(child: Text('Classes', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            ),
+
+            DataTable(
+              
+              columns: const [
+
+              DataColumn(label: 
+              Text('Class', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))),
+
+              DataColumn(label: 
+              Text('Days', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))),
+
+              DataColumn(label: 
+              Text('Times', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))),
+              ],
+            
+              rows: const [  
+                DataRow(cells: [  
+                  DataCell(Text('Cardio')),  
+                  DataCell(Text('Mon, Wed, Fri')),  
+                  DataCell(Text('6am to 6pm')),  
+                ]),  
+                DataRow(cells: [  
+                  DataCell(Text('Kick Boxing')),  
+                  DataCell(Text('Tue, Thu')),  
+                  DataCell(Text('9am to 3pm')),  
+                ]),  
+                DataRow(cells: [  
+                  DataCell(Text('Yoga')),  
+                  DataCell(Text('Mon, Wed, Fri')),  
+                  DataCell(Text('8am to 11am')),  
+                ]), 
+                DataRow(cells: [  
+                  DataCell(Text('Spinning')),  
+                  DataCell(Text('Sat, Tue, Wed')),  
+                  DataCell(Text('10am to 4pm')),  
+                ]),
+                DataRow(cells: [  
+                  DataCell(Text('Zumba')),  
+                  DataCell(Text('Fri, Sat')),  
+                  DataCell(Text('6pm to 9pm')),  
+                ]), 
+               
+            ],
+            )
+
+          ],
+        ),
+      )
+    );
+
+  }
+}
+
+class Nutrition extends StatefulWidget {               // Fourth Page
+  
+  State<StatefulWidget> createState() {
+    return _nutrition();
+  }
+  
+}
+
+class _nutrition extends State<Nutrition>{        // fourth page by having a stateful widget and slider to scroll each diet
+
+  static final GlobalKey<ScaffoldState> _ScaffoldKey = GlobalKey<ScaffoldState>();
+
+  final controll = PageController(
+      initialPage: 1
+  );
+
+  @override
+  Widget build(BuildContext context){
+
+    // ignore: unused_local_variable
+    Size _screenSize = MediaQuery.of(context).size;
+
+    return Scaffold(
+      key: _ScaffoldKey,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.grey,
+        title: const Text('Cards that can be scrolled', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold ),),
+
+      ),
+
+      body: PageView(
+        controller: controll,
+        scrollDirection: Axis.horizontal,
+        
+
+        physics: const BouncingScrollPhysics(),
+        pageSnapping: true,
+        children: <Widget>[
+
+          GestureDetector(                        // a gestureDetector that has a card inside. Same applies for the other two
+            onTap: () => setState(() {
+                      var snackBar = const SnackBar(content: Text('Card is pressed'));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }),
+            child: Container(
+            color: Colors.grey,
+            child: Card(
+              color: Colors.blueGrey,
+              elevation: 4,
+              margin: const EdgeInsets.all(15),
+              semanticContainer: true,
+              child: cardPic(
+                images: "f1.jpg",
+                
+              ),
+            ),
+
+          ),
+          ),
+
+          GestureDetector(                      // second card inside the gesture detector
+            onTap: () => setState(() {
+                  var snackBar = const SnackBar(content: Text('Card is pressed'));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }),
+            child: Container(
+            color: Colors.grey,
+            child: Card(
+              color: Colors.blueGrey,
+              elevation: 4,
+              margin: const EdgeInsets.all(15),
+              semanticContainer: true,
+              child: cardPic(
+                images: "f2.jpg",
+                
+              ),
+            ),
+
+          ),
+          ),
+
+          GestureDetector(                              // third card inside gesture detector
+            onTap: () => setState(() {
+                var snackBar = const SnackBar(content: Text('Card is pressed'));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }),
+            child: Container(
+            color: Colors.grey,
+            child: Card(
+              color: Colors.blueGrey,
+              elevation: 4,
+              margin: const EdgeInsets.all(15),
+              semanticContainer: true,
+              child: cardPic(
+                images: "f3.jpg",
+                
+              ),
+            ),
+
+          ),
+          ),
+
+        ]
+      )
+    );
+          
+  }
+
+}
+
+class cardPic extends StatelessWidget{                // addition to fourth page
+
+  cardPic({Key? key, this.caption="", this.description="", this.images=""}) : super(key: key);
+
+  final String caption;
+  final String description;
+  final String images;
+
+  @override
+  Widget build(BuildContext context){
+
+    return Container(
+        child: Card(
+          child: Card(
+              color: Colors.blueGrey,
+              elevation: 4,
+              margin: const EdgeInsets.all(15),
+              semanticContainer: true,
+          shape:  RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3.0),
+          ),
+              child: Image.asset(images, fit: BoxFit.cover),
+              
+        ),
+        )
+    );
+
+  }
+}
+
+class contactUs extends StatelessWidget{          // final page 'contact us' page using an imported package called 'contactUs'
+
+  
+  contactUs({Key? key, this.image="", this.email="", this.companyName= "", this.phoneNumber="", this.website=""}) : super(key: key);
+
+  final String email;
+  final String companyName;
+  final String phoneNumber;
+  final String image;
+  final String website;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      
+      home: Scaffold(
+        backgroundColor: Colors.grey,
+        body: ContactUs(
+          image: Image.asset('NewLogo.png'),
+          email: 'ForwardFClub@gmail.com',
+          companyName: 'Forward Fitness',
+          phoneNumber: '(814) 555-9608',
+          website: 'https://google.com',
+
+          dividerThickness: 3, 
+          textColor: Colors.black, 
+          cardColor: Colors.white, 
+          companyColor: Colors.grey, 
+          taglineColor: Colors.white,
+          
+        ),
+        
+      ),
+      
+    );
+    
+  }
+}
